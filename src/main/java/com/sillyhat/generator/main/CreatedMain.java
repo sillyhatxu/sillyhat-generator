@@ -185,6 +185,7 @@ public class CreatedMain {
 
 
     public static void main(String[] args) {
+
         String outFilePath = "E:\\Log\\Created\\";
         String author = "XUSHIKUAN";
         String tableName = "t_learning_word_repository";
