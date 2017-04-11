@@ -1,0 +1,100 @@
+package {0}.{2}.integration.dao;
+
+import java.util.List;
+import com.paic.learn.adminapi.{2}.dto.{1}DTO;
+import com.paic.learn.ibatis.annotation.IbatisMapper;
+import com.paic.learn.ibatis.annotation.SqlParam;
+
+
+@IbatisMapper("{1}Dao")
+public interface {1}Dao '{'
+
+	/**
+	 * <p>Title: save</p>
+	 * <p>Description: </p>保存
+	 * @param obj
+	 * @author {3}
+	 * @date {4}
+	 */
+	public String insert({1}DTO dto);
+	
+	/**
+	 * <p>Title: update</p>
+	 * <p>Description: </p>修改
+	 * @param obj
+	 * @author {3}
+	 * @date {4}
+	 */
+	public Integer update({1}DTO dto);
+	
+	
+	/**
+	 * <p>Title: updateByPrimaryKeySelective</p>
+	 * <p>Description: </p>根据主键ID，选择性的修改数据
+	 * @param dto
+	 * @return
+	 * @author {3}
+	 * @date {4}
+	 */
+	public Integer updateByPrimaryKeySelective({1}DTO dto);
+	
+	
+	/**
+	 * <p>Title: deleteByPrimaryKey</p>
+	 * <p>Description: </p>根据主键删除
+	 * @param id
+	 * @return
+	 * @author {3}
+	 * @date {4}
+	 */
+	public Integer deleteByPrimaryKey(@SqlParam("id")String id);
+	
+	
+	/**
+	 * <p>Title: selectByPrimaryKey</p>
+	 * <p>Description: </p>根据主键查询
+	 * @param id
+	 * @return
+	 * @author {3}
+	 * @date {4}
+	 */
+	public {1}DTO selectByPrimaryKey(@SqlParam("id")String id);
+	
+	
+	/**
+	 * <p>Title: queryByParam</p>
+	 * <p>Description: </p>条件分页查询
+	 * @param sqlId
+	 * @param param
+	 * @return
+	 * @author {3}
+	 * @date {4}
+	 */
+	public List<{1}DTO> queryPagingByParam(
+			@SqlParam("dto"){1}DTO dto,
+			@SqlParam("start")int start, 
+			@SqlParam("end")int end);
+	
+	/**
+	 * <p>Title: searchPagingCount</p>
+	 * <p>Description: </p>条件查询总数
+	 * @param sqlId
+	 * @param param
+	 * @return
+	 * @author {3}
+	 * @date {4}
+	 */
+	public int searchPagingCount({1}DTO dto);
+	
+	/**
+	 * <p>Title: queryAll</p>
+	 * <p>Description: </p>查询全部
+	 * @param sqlId
+	 * @return
+	 * @author {3}
+	 * @date {4}
+	 */
+	public List<{1}DTO> queryAll();
+	
+
+}

@@ -1,0 +1,62 @@
+package {0}.{2}.biz.service.imp;
+
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.google.common.collect.Maps;
+import {0}.{2}.biz.service.{1}Service;
+import {0}.{2}.dto.{1}DTO;
+import {0}.{2}.integration.dao.{1}Dao;
+
+@Service("{3}Service")
+public class {1}ServiceImpl implements {1}Service'{'
+
+	@Autowired
+	private {1}Dao {1}Dao;
+	
+	@Override
+	public {1}DTO add({1}DTO dto) '{'
+		String id = {1}Dao.insert(dto);
+		return dto;
+	}
+
+	@Override
+	public {1}DTO update({1}DTO dto) '{'
+		{1}Dao.update(dto);
+		return dto;
+	}
+
+	@Override
+	public boolean deleteByPrimaryKey(String id) '{'
+		int i = {1}Dao.deleteByPrimaryKey(id);
+		return i > 0 ? true : false;
+	}
+	
+	@Override
+	public {1}DTO selectByPrimaryKey(String id) '{'
+		return {1}Dao.selectByPrimaryKey(id);
+	}
+	
+	@Override
+	public Map<String, Object> queryPagingByParam({1}DTO dto,
+			int currentPage, int pageSize) '{'
+		Map<String, Object> map = Maps.newHashMap();
+		int start = (currentPage - 1) * pageSize + 1;
+		int end = currentPage * pageSize;
+		List<{1}DTO> list = {1}Dao.queryPagingByParam(dto, start, end);
+		map.put("resultList", list);
+		map.put("totalCount", searchPagingCount(dto));
+		return map;
+	}
+
+	@Override
+	public int searchPagingCount({1}DTO dto) '{'
+		return {1}Dao.searchPagingCount(dto);
+	}
+
+	@Override
+	public List<{1}DTO> queryAll() '{'
+		return {1}Dao.queryAll();
+	}
+}

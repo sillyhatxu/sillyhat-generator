@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="adminapi.{3}">
+
+	<resultMap id="adminapi.{3}.{1}.ResultMap" class="{0}.{2}.dto.{1}DTO">
+		{4}
+	</resultMap>
+	
+	<!-- 新增 -->
+	<insert id="{1}Dao.insert" parameterClass="{0}.{2}.dto.{1}DTO">
+		<selectKey resultClass="java.lang.String" keyProperty="id">
+            select sys_guid() as guid from dual
+        </selectKey>
+		insert into
+		MLN_FLOW_CONTROL
+		(
+		ID,REQUEST_PATH,MAX_REQUEST,IS_USE,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE
+		) values
+		(
+		#id#,
+		#requestPath#,
+		#maxRequest#,
+		#isUse#,
+		#createdBy#,
+        SYSDATE,
+        #updatedBy#,
+        SYSDATE)
+	</insert>
+	
+	<!-- 根据主键ID修改 -->
+	<update id="FlowControlDao.update" parameterClass="com.paic.learn.adminapi.flowcontrol.dto.FlowControlDTO">
+		update MLN_FLOW_CONTROL
+		set
+			REQUEST_PATH = #requestPath#,
+			MAX_REQUEST = #maxRequest#,
+			IS_USE = #isUse#,
+			UPDATED_BY = #updatedBy#,
+			UPDATED_DATE = sysdate
+		where ID = #id#
+	</update>
+	
+	<!-- 根据主键ID修改传入参数 -->
+	<update id="FlowControlDao.updateByPrimaryKeySelective" parameterClass="com.paic.learn.adminapi.flowcontrol.dto.FlowControlDTO">
+		update MLN_FLOW_CONTROL
+		<dynamic prepend="set">
+			<isNotEmpty prepend="," property="requestPath">
+				REQUEST_PATH = #requestPath#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="maxRequest">
+				MAX_REQUEST = #maxRequest#
+			</isNotEmpty>
+			<isEqual property="isUse" compareValue="-1">
+	        	IS_USE = #isUse#
+	        </isEqual>
+			<isNotEmpty prepend="," property="updatedBy">
+				UPDATED_BY = #updatedBy#
+				UPDATED_DATE = sysdate
+			</isNotEmpty>
+		</dynamic>
+		where id = #id#
+	</update>
+	
+	<!-- 物理删除 -->
+	<delete id="FlowControlDao.deleteByPrimaryKey" parameterClass="java.lang.String">
+		delete from MLN_FLOW_CONTROL where ID = #id#
+	</delete>
+	
+	<!-- 根据主键ID获取详情 -->
+	<select id="FlowControlDao.selectByPrimaryKey" parameterClass="java.lang.String" resultMap="adminapi.flowControl.FlowControl.ResultMap">
+		select
+			ID,REQUEST_PATH,MAX_REQUEST,IS_USE,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE
+		from
+			MLN_FLOW_CONTROL
+	  	where ID = #id#
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="FlowControlDao.queryPagingByParam" parameterClass="java.lang.String" resultMap="adminapi.flowControl.FlowControl.ResultMap">
+		select ID,REQUEST_PATH,MAX_REQUEST,IS_USE,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE
+		  from MLN_FLOW_CONTROL
+		 where rowid in (select rid
+		                   from (select rownum rn, rid
+		                           from (select rowid rid
+		                                   from MLN_FLOW_CONTROL t
+			                                <dynamic prepend="where">
+												<isNotEmpty prepend="and" property="dto.requestPath">
+													REQUEST_PATH = #dto.requestPath#
+												</isNotEmpty>
+												<isNotEmpty prepend="and" property="dto.maxRequest">
+													MAX_REQUEST = #dto.maxRequest#
+												</isNotEmpty>
+												<isEqual prepend="and" property="dto.isUse" compareValue="-1">
+										        	IS_USE = #dto.isUse#
+										        </isEqual>
+											</dynamic>
+		                                <isNotEmpty prepend="and" property="dto.classifyId">
+										CLASSIFY_ID LIKE '%'||(#dto.classifyId#)||'%'
+										</isNotEmpty>
+		                                   )
+		 <![CDATA[
+		                   where rownum <= #end#)
+		           where rn >= #start#)
+        ]]>
+	</select>
+
+	<select id="FlowControlDao.searchPagingCount" resultClass="int">
+			SELECT count(1) FROM MLN_FLOW_CONTROL
+			<dynamic prepend="where">
+				<isNotEmpty prepend="and" property="dto.requestPath">
+					REQUEST_PATH = #dto.requestPath#
+				</isNotEmpty>
+				<isNotEmpty prepend="and" property="dto.maxRequest">
+					MAX_REQUEST = #dto.maxRequest#
+				</isNotEmpty>
+				<isEqual prepend="and" property="dto.isUse" compareValue="-1">
+		        	IS_USE = #dto.isUse#
+		        </isEqual>
+			</dynamic>
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="FlowControlDao.queryAll" resultMap="adminapi.flowControl.FlowControl.ResultMap">
+		select
+		ID,REQUEST_PATH,MAX_REQUEST,IS_USE,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE
+		from
+		MLN_FLOW_CONTROL
+	</select>
+
+</sqlMap>
