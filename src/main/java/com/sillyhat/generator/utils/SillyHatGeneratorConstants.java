@@ -8,6 +8,16 @@ package com.sillyhat.generator.utils;
  */
 public class SillyHatGeneratorConstants {
 
+    /**
+     * Oracle数据类型
+     */
+    public static final int DATABASE_TYPE_ORACLE = 1;
+
+    /**
+     * Mysql数据类型
+     */
+    public static final int DATABASE_TYPE_MYSQL = 2;
+
     public static final String ENCODING_UTF8 = "UTF-8";
 
     public static final String TEMPLATE_PATH_NAMT_DTO = "com/sillyhat/generator/template/dto-template.txt";

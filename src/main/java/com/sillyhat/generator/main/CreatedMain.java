@@ -3,17 +3,20 @@ package com.sillyhat.generator.main;
 import com.sillyhat.generator.dto.CreatedDTO;
 import com.sillyhat.generator.dto.TemplatePathDTO;
 import com.sillyhat.generator.utils.SillyHatGeneratorConstants;
+import com.sillyhat.generator.utils.SillyHatGeneratorDBUtils;
 import com.sillyhat.generator.utils.SillyHatGeneratorFileUtils;
-
+import com.sillyhat.generator.utils.SillyHatGeneratorStringUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.sql.Connection;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * CreatedMain
@@ -30,17 +33,6 @@ public class CreatedMain {
     private CreatedMain(){
 
     }
-
-    /**
-     * Oracle数据类型
-     */
-    public static int DATABASE_TYPE_ORACLE = 1;
-
-    /**
-     * Mysql数据类型
-     */
-    public static int DATABASE_TYPE_MYSQL = 2;
-
 
     public static CreatedMain getInstance() {
         if (instance == null) {
@@ -78,7 +70,11 @@ public class CreatedMain {
 
 
     private void created(CreatedDTO dto, int databaseType){
-        this.outFilePath = dto.getOutFilePath();
+        this.databaseDriverClassName = dto.getDatabaseDriverClassName();
+        this.databaseUrl = dto.getDatabaseUrl();
+        this.databaseUserName = dto.getDatabaseUserName();
+        this.databasePassword = dto.getDatabasePassword();
+        this.outFilePath = SillyHatGeneratorStringUtils.getDirPath(dto.getOutFilePath());
         this.author = dto.getAuthor();
         this.tableName = dto.getTableName();
         this.packageName = dto.getPackageName();
@@ -101,15 +97,19 @@ public class CreatedMain {
         String[] fileReplaceSign = new String[] {
                 author,packageName,moduelName,entityName,"4444","5555","6666","7777","8888"
         };
-
+        createdFile("E:\\Log\\" + entityName + "\\com\\test\\","Test.java",fileReplaceSign,SillyHatGeneratorConstants.TEMPLATE_PATH_NAMT_DTO);
     }
 
     private void createdFile(String outFilePath,String outFileName,String[] fileReplaceSign,String templatePathNamt){
         try {
-            String result = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(SillyHatGeneratorConstants.TEMPLATE_PATH_NAMT_DTO), SillyHatGeneratorConstants.ENCODING_UTF8);
+            List<String> resultLines = new ArrayList<String>();
+            String result = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(templatePathNamt), SillyHatGeneratorConstants.ENCODING_UTF8);
             result = MessageFormat.format(result, fileReplaceSign);
-
-
+            resultLines.add(result);
+            File file = new File(outFilePath + outFileName);
+//            SillyHatGeneratorFileUtils.forceMkdir(file);
+            SillyHatGeneratorFileUtils.touch(file);
+            SillyHatGeneratorFileUtils.writeLines(file , resultLines);
         } catch (IOException e) {
             logger.error("文件处理发生异常",e);
         }
@@ -117,14 +117,17 @@ public class CreatedMain {
 
     private void executeSQL(){
         String sql = getSql();
+        SillyHatGeneratorDBUtils dbUtils = SillyHatGeneratorDBUtils.getInstance();
+        Connection connection = dbUtils.getConnection(databaseType,databaseDriverClassName,databaseUrl,databaseUserName,databasePassword);
+        List<Map<String,Object>> list = dbUtils.query(connection,sql);
 
 
     }
 
     private String getSql(){
-        if(databaseType == DATABASE_TYPE_MYSQL){
+        if(databaseType == SillyHatGeneratorConstants.DATABASE_TYPE_MYSQL){
             return MessageFormat.format(SillyHatGeneratorConstants.DATABASE_MYSQL_SQL, tableName);
-        }else if(databaseType == DATABASE_TYPE_ORACLE){
+        }else if(databaseType == SillyHatGeneratorConstants.DATABASE_TYPE_ORACLE){
             return MessageFormat.format(SillyHatGeneratorConstants.DATABASE_MYSQL_SQL, tableName);
         }else{
             logger.error("不支持的数据库类型");
@@ -148,7 +151,7 @@ public class CreatedMain {
             logger.error("author");
         }else if(tableName  == null || "".equals(tableName)){
             logger.error("tableName必填");
-        }else if(databaseType != DATABASE_TYPE_MYSQL && databaseType!= DATABASE_TYPE_ORACLE){
+        }else if(databaseType != SillyHatGeneratorConstants.DATABASE_TYPE_MYSQL && databaseType!= SillyHatGeneratorConstants.DATABASE_TYPE_ORACLE){
             logger.error("不支持的数据库类型");
         }else{
             check = true;
@@ -156,24 +159,43 @@ public class CreatedMain {
         return check;
     }
 
+    private String databaseDriverClassName;
+
+    private String databaseUrl;
+
+    private String databaseUserName;
+
+    private String databasePassword;
+
     private int databaseType;
+
     private String outFilePath;
+
     private String author;
+
     private String tableName;
+
     private String packageName;
+
     private String moduelName;
+
     private String entityName;
+
     private List<TemplatePathDTO> templateList;
 
 
     public static void main(String[] args) {
-        String outFilePath = "E:\\Log\\Created";
+        String outFilePath = "E:\\Log\\Created\\";
         String author = "XUSHIKUAN";
         String tableName = "t_learning_word_repository";
-        String packageName = "";
-        String moduelName = "";
-        String entityName = "";
-        CreatedDTO dto = new CreatedDTO(outFilePath,author,tableName,packageName,moduelName,entityName);
-        CreatedMain.getInstance().createDefault(dto,CreatedMain.DATABASE_TYPE_MYSQL);
+        String packageName = "com.sillyhat.project.test";
+        String moduelName = "hehe";
+        String entityName = "Hello";
+//        CreatedDTO dto = new CreatedDTO(outFilePath,author,tableName,packageName,moduelName,entityName);
+//        CreatedMain.getInstance().createDefault(dto,CreatedMain.DATABASE_TYPE_MYSQL);
+//        System.out.println(packageName.replace(".","\\\\"));
+        System.out.println(SillyHatGeneratorStringUtils.getDirPath("E:\\Log\\Created\\"));
+        System.out.println(SillyHatGeneratorStringUtils.getDirPath("E:\\Log\\Created/"));
+        System.out.println(SillyHatGeneratorStringUtils.getDirPath("E:\\Log\\Created"));
     }
 }

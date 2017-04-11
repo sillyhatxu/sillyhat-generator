@@ -12,6 +12,26 @@ import java.util.List;
 public class CreatedDTO implements Serializable{
 
     private static final long serialVersionUID = -8006463195691021662L;
+
+    /**
+     * 连接数据库:驱动
+     */
+    private String databaseDriverClassName;
+
+    /**
+     * 连接数据库:URL
+     */
+    private String databaseUrl;
+
+    /**
+     * 连接数据库:用户名
+     */
+    private String databaseUserName;
+
+    /**
+     * 连接数据库:密码
+     */
+    private String databasePassword;
     /**
      * 输出路径
      */
@@ -42,18 +62,28 @@ public class CreatedDTO implements Serializable{
      */
     private String entityName;
 
-
+    /**
+     * 模板列表
+     */
     private List<TemplatePathDTO> templateList;
 
     public boolean useDefaultTemplate;
 
     /**
      * 使用默认自定义模板时
+     * @param databaseDriverClassName
+     * @param databaseUrl
+     * @param databaseUserName
+     * @param databasePassword
      * @param outFilePath
-     * @param author
      * @param tableName
+     * @param templateList
      */
-    public CreatedDTO(String outFilePath,String author,String tableName,List<TemplatePathDTO> templateList){
+    public CreatedDTO(String databaseDriverClassName,String databaseUrl,String databaseUserName,String databasePassword,String outFilePath,String tableName,List<TemplatePathDTO> templateList){
+        this.databaseDriverClassName = databaseDriverClassName;
+        this.databaseUrl = databaseUrl;
+        this.databaseUserName = databaseUserName;
+        this.databasePassword = databasePassword;
         this.outFilePath = outFilePath;
         this.author = author;
         this.tableName = tableName;
@@ -64,6 +94,10 @@ public class CreatedDTO implements Serializable{
 
     /**
      * 使用默认模板
+     * @param databaseDriverClassName
+     * @param databaseUrl
+     * @param databaseUserName
+     * @param databasePassword
      * @param outFilePath
      * @param author
      * @param tableName
@@ -71,7 +105,11 @@ public class CreatedDTO implements Serializable{
      * @param moduelName
      * @param entityName
      */
-    public CreatedDTO(String outFilePath,String author,String tableName,String packageName,String moduelName,String entityName){
+    public CreatedDTO(String databaseDriverClassName,String databaseUrl,String databaseUserName,String databasePassword,String outFilePath,String author,String tableName,String packageName,String moduelName,String entityName){
+        this.databaseDriverClassName = databaseDriverClassName;
+        this.databaseUrl = databaseUrl;
+        this.databaseUserName = databaseUserName;
+        this.databasePassword = databasePassword;
         this.outFilePath = outFilePath;
         this.author = author;
         this.tableName = tableName;
@@ -111,5 +149,21 @@ public class CreatedDTO implements Serializable{
 
     public boolean isUseDefaultTemplate() {
         return useDefaultTemplate;
+    }
+
+    public String getDatabaseDriverClassName() {
+        return databaseDriverClassName;
+    }
+
+    public String getDatabaseUrl() {
+        return databaseUrl;
+    }
+
+    public String getDatabaseUserName() {
+        return databaseUserName;
+    }
+
+    public String getDatabasePassword() {
+        return databasePassword;
     }
 }
