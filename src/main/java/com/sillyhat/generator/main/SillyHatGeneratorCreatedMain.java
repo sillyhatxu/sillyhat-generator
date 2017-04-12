@@ -244,7 +244,7 @@ public class SillyHatGeneratorCreatedMain {
         }else{
             outPath = SillyHatGeneratorFileUtils.getDirPath(outFilePath);
         }
-        createdFile(outPath,entityName+"Mapping.xml",fileReplaceSign,SillyHatGeneratorConstants.TEMPLATE_PATH_NAMT_MAPPING);
+        createdFile(outPath,entityName+"Mapper.xml",fileReplaceSign,SillyHatGeneratorConstants.TEMPLATE_PATH_NAMT_MAPPING);
         logger.info("..........创建Mapping成功..........");
     }
 
