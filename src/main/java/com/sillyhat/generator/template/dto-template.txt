@@ -1,9 +1,10 @@
-package {0}{1}.{2}.dto;
+package {1}.{2}.dto;
 
 import java.io.Serializable;
 {4}
 
 public class {3}DTO implements Serializable '{'
+
 
 {5}
 {6}

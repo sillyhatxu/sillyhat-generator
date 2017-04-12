@@ -1,0 +1,15 @@
+select t.COLUMN_NAME as COLUMN_NAME,
+       t.DATA_TYPE as DATA_TYPE,
+       uc.COMMENTS as COMMENTS,
+       (select count(1)
+          from user_constraints s, user_cons_columns m
+         where upper(m.table_name) = upper(''{0}'')
+           and m.table_name = s.table_name
+           and m.constraint_name = s.constraint_name
+           and s.constraint_type = ''P''
+           and m.column_name = t.COLUMN_NAME) IS_KEY
+  from user_tab_columns t, user_col_comments uc
+ where t.TABLE_NAME = uc.TABLE_NAME
+   and t.COLUMN_NAME = uc.COLUMN_NAME
+   and upper(t.Table_Name) = upper(''{0}'')
+ ORDER BY t.COLUMN_ID

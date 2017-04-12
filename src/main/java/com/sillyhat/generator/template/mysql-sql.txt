@@ -1,0 +1,7 @@
+SELECT column_name as COLUMN_NAME,
+       data_type as DATA_TYPE,
+       column_comment as COMMENTS,
+       if(column_key = ''PRI'', 1, 0) IS_KEY
+  FROM information_schema.columns
+ WHERE table_name = ''{0}''
+ ORDER BY ordinal_position

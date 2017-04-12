@@ -1,100 +1,86 @@
-package {0}.{2}.integration.dao;
+package {1}.{2}.integration.dao;
 
 import java.util.List;
-import com.paic.learn.adminapi.{2}.dto.{1}DTO;
-import com.paic.learn.ibatis.annotation.IbatisMapper;
-import com.paic.learn.ibatis.annotation.SqlParam;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
+import com.sillyhat.project.core.dto.PageDTO;
+import {1}.{2}.dto.{3}DTO;
 
 
-@IbatisMapper("{1}Dao")
-public interface {1}Dao '{'
+public interface {3}Mapper '{'
 
-	/**
-	 * <p>Title: save</p>
+
+    /**
+	 * <p>Title: insert{3}</p>
 	 * <p>Description: </p>保存
-	 * @param obj
-	 * @author {3}
+	 * @param dto
+	 * @author {0}
 	 * @date {4}
 	 */
-	public String insert({1}DTO dto);
-	
+	public long insert{3}({3}DTO dto);
+
 	/**
 	 * <p>Title: update</p>
 	 * <p>Description: </p>修改
-	 * @param obj
-	 * @author {3}
-	 * @date {4}
-	 */
-	public Integer update({1}DTO dto);
-	
-	
-	/**
-	 * <p>Title: updateByPrimaryKeySelective</p>
-	 * <p>Description: </p>根据主键ID，选择性的修改数据
 	 * @param dto
-	 * @return
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public Integer updateByPrimaryKeySelective({1}DTO dto);
-	
-	
+	public void update{3}({3}DTO dto);
+
 	/**
-	 * <p>Title: deleteByPrimaryKey</p>
+     * <p>Title: update{3}ByPrimaryKeySelective</p>
+     * <p>Description: </p>根据主键ID，选择性的修改数据
+     * @param dto
+     * @return
+     * @author {0}
+     * @date {4}
+     */
+    public Integer update{3}ByPrimaryKeySelective({3}DTO dto);
+
+	/**
+	 * <p>Title: delete{3}ByPrimaryKey</p>
 	 * <p>Description: </p>根据主键删除
 	 * @param id
-	 * @return
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public Integer deleteByPrimaryKey(@SqlParam("id")String id);
-	
-	
+	public Integer delete{3}ByPrimaryKey(@Param("id")long id);
+
 	/**
-	 * <p>Title: selectByPrimaryKey</p>
+	 * <p>Title: select{3}ByPrimaryKey</p>
 	 * <p>Description: </p>根据主键查询
 	 * @param id
-	 * @return
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public {1}DTO selectByPrimaryKey(@SqlParam("id")String id);
-	
-	
+	public {3}DTO select{3}ByPrimaryKey(@Param("id")long id);
+
 	/**
-	 * <p>Title: queryByParam</p>
-	 * <p>Description: </p>条件分页查询
-	 * @param sqlId
-	 * @param param
-	 * @return
-	 * @author {3}
+	 * <p>Title: query{3}ByPage</p>
+	 * <p>Description: </p>分页查询
+	 * @param page
+	 * @return	PageDTO：分页查询实体类
+	 * @author {0}
 	 * @date {4}
 	 */
-	public List<{1}DTO> queryPagingByParam(
-			@SqlParam("dto"){1}DTO dto,
-			@SqlParam("start")int start, 
-			@SqlParam("end")int end);
-	
+	public List<{3}DTO> query{3}ByPage(PageDTO page);
+
+
 	/**
 	 * <p>Title: searchPagingCount</p>
-	 * <p>Description: </p>条件查询总数
-	 * @param sqlId
-	 * @param param
-	 * @return
-	 * @author {3}
+	 * <p>Description: </p>查询总数
+	 * @param param 查询条件
+	 * @author {0}
 	 * @date {4}
 	 */
-	public int searchPagingCount({1}DTO dto);
-	
-	/**
-	 * <p>Title: queryAll</p>
-	 * <p>Description: </p>查询全部
-	 * @param sqlId
-	 * @return
-	 * @author {3}
-	 * @date {4}
-	 */
-	public List<{1}DTO> queryAll();
-	
+    public int get{3}CountByParams(Map<String,Object> params);
 
+	/**
+	 * <p>Title: query{3}All</p>
+	 * <p>Description: </p>查询所有
+	 * @author {0}
+	 * @date {4}
+	 */
+	public List<{3}DTO> query{3}All();
 }

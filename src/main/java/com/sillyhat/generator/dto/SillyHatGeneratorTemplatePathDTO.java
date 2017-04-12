@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author 徐士宽
  * @date 2017/4/11 14:09
  */
-public class TemplatePathDTO implements Serializable {
+public class SillyHatGeneratorTemplatePathDTO implements Serializable {
 
     private static final long serialVersionUID = -7001612925905616936L;
 

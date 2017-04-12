@@ -1,6 +1,7 @@
 package com.sillyhat.generator.utils;
 
-import com.sillyhat.generator.main.CreatedMain;
+import com.sillyhat.generator.dto.SillyHatGeneratorEntityDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,12 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SillyHatGeneratorDBUtils {
 
@@ -66,33 +64,43 @@ public class SillyHatGeneratorDBUtils {
      * @date 2015-12-2
      * @return:List<Map<String,Object>>
      */
-    public List<Map<String,Object>> query(Connection connection,String sql){
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+    public List<SillyHatGeneratorEntityDTO> query(Connection connection, String sql){
+        List<SillyHatGeneratorEntityDTO> resultList = new ArrayList<SillyHatGeneratorEntityDTO>();
         PreparedStatement pstam = null;
         ResultSet rs = null;
         try {
             pstam = connection.prepareStatement(sql);
             rs = pstam.executeQuery();// 执行sql语句
-            // 用于获取列数、或者列类型
-            ResultSetMetaData meta = rs.getMetaData();
-            while (rs.next()) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                for (int i = 1; i <= meta.getColumnCount(); i++) {
-                    String key = meta.getColumnName(i);//当前列名
-                    if(key.equals("COLUMN_COMMENT")){
-                        key = "COMMENTS";
-                    }
-                    Object value = rs.getObject(i);
-                    map.put(key, value);
-                }
-                list.add(map);
+
+            SillyHatGeneratorEntityDTO dto = null;
+            while(rs.next()){
+                dto = new SillyHatGeneratorEntityDTO();
+                dto.setIsKey(rs.getString("IS_KEY") != null && rs.getString("IS_KEY").equals("1"));//存储DATA_TYPE时会用到此字段，所以优先存储
+                dto.setColumnName(rs.getString("COLUMN_NAME"));
+                dto.setComments(rs.getString("COMMENTS"));
+                dto.setDataType(rs.getString("DATA_TYPE"));
+                resultList.add(dto);
             }
+            // 用于获取列数、或者列类型
+//            ResultSetMetaData meta = rs.getMetaData();
+//            while (rs.next()) {
+//                Map<String, Object> map = new HashMap<String, Object>();
+//                for (int i = 1; i <= meta.getColumnCount(); i++) {
+//                    String key = meta.getColumnName(i);//当前列名
+//                    if(key.equals("COLUMN_COMMENT")){
+//                        key = "COMMENTS";
+//                    }
+//                    Object value = rs.getObject(i);
+//                    map.put(key, value);
+//                }
+//                list.add(map);
+//            }
         } catch (SQLException e) {
             logger.error("查询出现异常。",e);
         } finally {
             close(null, pstam, rs);
         }
-        return list;
+        return resultList;
     }
 
     public static void close(Connection con , PreparedStatement p , ResultSet rs){
@@ -100,21 +108,21 @@ public class SillyHatGeneratorDBUtils {
             try {
                 con.close();
             } catch (SQLException e) {
-                System.out.println("Connection close error" + e.getMessage());
+                logger.error("Connection close error",e);
             }
         }
         if(p != null){
             try {
                 p.close();
             } catch (SQLException e) {
-                System.out.println("PreparedStatement close error" + e.getMessage());
+                logger.error("PreparedStatement close error",e);
             }
         }
         if(rs != null){
             try {
                 rs.close();
             } catch (SQLException e) {
-                System.out.println("ResultSet close error" + e.getMessage());
+                logger.error("ResultSet close error",e);
             }
         }
     }

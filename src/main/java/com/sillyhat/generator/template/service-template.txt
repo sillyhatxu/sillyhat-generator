@@ -1,75 +1,73 @@
-package {0}.{2}.service;
+package {1}.{2}.service;
 
 import java.util.List;
 import java.util.Map;
-import com.paic.learn.adminapi.{2}.dto.{1}DTO;
+import {1}.{2}.dto.{3}DTO;
 
-public interface {1}Service '{'
-
+public interface {3}Service '{'
 
 	/**
-	 * <p>Title: save</p>
+	 * <p>Title: add</p>
 	 * <p>Description: </p>保存
 	 * @param obj
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public {1}DTO add({1}DTO obj);
+	public {3}DTO add{3}({3}DTO dto);
 	
 	/**
 	 * <p>Title: update</p>
 	 * <p>Description: </p>修改
 	 * @param obj
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public {1}DTO update({1}DTO obj);
+	public {3}DTO update{3}({3}DTO dto);
 	
 	/**
-	 * <p>Title: deleteByPrimaryKey</p>
+	 * <p>Title: delete{3}ByPrimaryKey</p>
 	 * <p>Description: </p>根据主键删除
 	 * @param id
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public boolean deleteByPrimaryKey(String id);
+	public boolean delete{3}ByPrimaryKey(long id);
 	
 	/**
-	 * <p>Title: selectByPrimaryKey</p>
+	 * <p>Title: select{3}ByPrimaryKey</p>
 	 * <p>Description: </p>根据主键查询
 	 * @param id
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public {1}DTO selectByPrimaryKey(String id);
+	public {3}DTO select{3}ByPrimaryKey(long id);
 	
 	/**
-	 * <p>Title: queryPagingByParam</p>
+	 * <p>Title: query{3}ByPage</p>
 	 * <p>Description: </p>分页查询
-	 * @param dto
-	 * @param currentPage	当前页
-	 * @param pageSize	显示数量
-	 * @return	Map：resultList、totalCount
-	 * @author {3}
+	 * @param page
+	 * @return	PageDTO：分页查询实体类
+	 * @author {0}
 	 * @date {4}
 	 */
-	public Map<String,Object> queryPagingByParam({1}DTO dto, int currentPage, int pageSize);
-	
+	public PageDTO query{3}ByPage(PageDTO page);
+
+
 	/**
-	 * <p>Title: searchPagingCount</p>
-	 * <p>Description: </p>得到分页查询总数
-	 * @param param
-	 * @author {3}
+	 * <p>Title: get{3}CountByParams</p>
+	 * <p>Description: </p>查询总数
+	 * @param param 查询条件
+	 * @author {0}
 	 * @date {4}
 	 */
-	public int searchPagingCount({1}DTO dto);
-	
+    public int get{3}CountByParams(Map<String,Object> params);
+
 	/**
-	 * <p>Title: queryAll</p>
+	 * <p>Title: query{3}All</p>
 	 * <p>Description: </p>查询所有
-	 * @author {3}
+	 * @author {0}
 	 * @date {4}
 	 */
-	public List<{1}DTO> queryAll();
+	public List<{3}DTO> query{3}All();
 
 }

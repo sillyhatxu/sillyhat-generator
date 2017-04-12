@@ -30,9 +30,48 @@ public class SillyHatGeneratorConstants {
 
     public static final String TEMPLATE_PATH_NAMT_MAPPING = "com/sillyhat/generator/template/mapping-template.txt";
 
+    public static final String TEMPLATE_PATH_NAMT_TEST = "com/sillyhat/generator/template/test-template.txt";
 
-    public static final String DATABASE_ORCLE_SQL = "";
 
-    public static final String DATABASE_MYSQL_SQL = "SELECT column_name,data_type,column_key,column_comment FROM information_schema.columns WHERE table_name = ''{0}'' order by ordinal_position";
+    public static final String TEMPLATE_PATH_DATABASE_ORACLE = "com/sillyhat/generator/template/oracle-sql.txt";
+
+    public static final String TEMPLATE_PATH_DATABASE_MYSQL = "com/sillyhat/generator/template/mysql-sql.txt";
+
+
+
+    /**
+     * @Fields STEREOTYPE_SERVICE : @Service
+     */
+    public static final String STEREOTYPE_SERVICE = "@Service";
+
+    /**
+     * @Fields STEREOTYPE_DAO : @Repository
+     */
+    public static final String STEREOTYPE_DAO = "@Repository";
+
+    /**
+     * @Fields STEREOTYPE_AUTOWIRED : @Autowired
+     */
+    public static final String STEREOTYPE_AUTOWIRED = "@Autowired";
+
+    /**
+     * @Fields SIGN_ENTER : 回车
+     */
+    public static final String SIGN_ENTER = "\r\n";
+
+    /**
+     * @Fields SIGN_TAB : tab
+     */
+    public static final String SIGN_TAB = "\t";
+
+    /**
+     * @Fields SIGN_AT : at
+     */
+    public static final String SIGN_AT = "@";
+
+    /**
+     * @Fields SIGN_ANNOTATION : 注释
+     */
+    public static final String SIGN_ANNOTATION = "//";
 
 }

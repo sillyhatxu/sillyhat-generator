@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * CreatedDTO
+ * SillyHatGeneratorCreatedDTO
  *
  * @author 徐士宽
  * @date 2017/4/10 17:04
  */
-public class CreatedDTO implements Serializable{
+public class SillyHatGeneratorCreatedDTO implements Serializable{
 
     private static final long serialVersionUID = -8006463195691021662L;
 
@@ -65,7 +65,7 @@ public class CreatedDTO implements Serializable{
     /**
      * 模板列表
      */
-    private List<TemplatePathDTO> templateList;
+    private List<SillyHatGeneratorTemplatePathDTO> templateList;
 
     public boolean useDefaultTemplate;
 
@@ -79,7 +79,7 @@ public class CreatedDTO implements Serializable{
      * @param tableName
      * @param templateList
      */
-    public CreatedDTO(String databaseDriverClassName,String databaseUrl,String databaseUserName,String databasePassword,String outFilePath,String tableName,List<TemplatePathDTO> templateList){
+    public SillyHatGeneratorCreatedDTO(String databaseDriverClassName, String databaseUrl, String databaseUserName, String databasePassword, String outFilePath, String tableName, List<SillyHatGeneratorTemplatePathDTO> templateList){
         this.databaseDriverClassName = databaseDriverClassName;
         this.databaseUrl = databaseUrl;
         this.databaseUserName = databaseUserName;
@@ -105,7 +105,7 @@ public class CreatedDTO implements Serializable{
      * @param moduelName
      * @param entityName
      */
-    public CreatedDTO(String databaseDriverClassName,String databaseUrl,String databaseUserName,String databasePassword,String outFilePath,String author,String tableName,String packageName,String moduelName,String entityName){
+    public SillyHatGeneratorCreatedDTO(String databaseDriverClassName, String databaseUrl, String databaseUserName, String databasePassword, String outFilePath, String author, String tableName, String packageName, String moduelName, String entityName){
         this.databaseDriverClassName = databaseDriverClassName;
         this.databaseUrl = databaseUrl;
         this.databaseUserName = databaseUserName;
@@ -143,7 +143,7 @@ public class CreatedDTO implements Serializable{
         return entityName;
     }
 
-    public List<TemplatePathDTO> getTemplateList() {
+    public List<SillyHatGeneratorTemplatePathDTO> getTemplateList() {
         return templateList;
     }
 

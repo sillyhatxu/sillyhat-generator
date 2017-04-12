@@ -1,62 +1,60 @@
-package {0}.{2}.biz.service.imp;
+package {1}.{2}.service.impl;
 
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.google.common.collect.Maps;
-import {0}.{2}.biz.service.{1}Service;
-import {0}.{2}.dto.{1}DTO;
-import {0}.{2}.integration.dao.{1}Dao;
+import {1}.{2}.service.{3}Service;
+import {1}.{2}.dto.{3}DTO;
+import {1}.{2}.mapper.{3}Mapper;
+import javax.annotation.Resource;
 
-@Service("{3}Service")
-public class {1}ServiceImpl implements {1}Service'{'
+@Service
+public class {3}ServiceImpl implements {3}Service'{'
 
-	@Autowired
-	private {1}Dao {1}Dao;
+	@Resource
+	private {3}Mapper {4}Mapper;
 	
 	@Override
-	public {1}DTO add({1}DTO dto) '{'
-		String id = {1}Dao.insert(dto);
+	public {3}DTO add{3}({3}DTO dto) '{'
+		Long id = {4}Mapper.insert{3}(dto);
+		dto.setId(id);
 		return dto;
 	}
 
 	@Override
-	public {1}DTO update({1}DTO dto) '{'
-		{1}Dao.update(dto);
+	public {3}DTO update{3}({3}DTO dto) '{'
+		{4}Mapper.update{3}(dto);
 		return dto;
 	}
 
 	@Override
-	public boolean deleteByPrimaryKey(String id) '{'
-		int i = {1}Dao.deleteByPrimaryKey(id);
+	public boolean delete{3}ByPrimaryKey(long id) '{'
+		int i = {4}Mapper.delete{3}ByPrimaryKey(id);
 		return i > 0 ? true : false;
 	}
 	
 	@Override
-	public {1}DTO selectByPrimaryKey(String id) '{'
-		return {1}Dao.selectByPrimaryKey(id);
+	public {3}DTO select{3}ByPrimaryKey(long id) '{'
+		return {4}Mapper.select{3}ByPrimaryKey(id);
 	}
 	
 	@Override
-	public Map<String, Object> queryPagingByParam({1}DTO dto,
-			int currentPage, int pageSize) '{'
-		Map<String, Object> map = Maps.newHashMap();
-		int start = (currentPage - 1) * pageSize + 1;
-		int end = currentPage * pageSize;
-		List<{1}DTO> list = {1}Dao.queryPagingByParam(dto, start, end);
-		map.put("resultList", list);
-		map.put("totalCount", searchPagingCount(dto));
-		return map;
+	public PageDTO query{3}ByPage(PageDTO page) '{'
+        List<{3}DTO> list = {4}Mapper.query{3}ByPage(page);
+	    int totalCount = {4}Mapper.get{3}CountByParams(page.getParams());
+        page.setResultList(list);
+        page.setTotalCount(totalCount);
+		return page;
 	}
 
 	@Override
-	public int searchPagingCount({1}DTO dto) '{'
-		return {1}Dao.searchPagingCount(dto);
+	public int get{3}CountByParams(Map<String,Object> params) '{'
+		return {4}Mapper.get{3}CountByParams(params);
 	}
 
 	@Override
-	public List<{1}DTO> queryAll() '{'
-		return {1}Dao.queryAll();
+	public List<{3}DTO> query{3}All() '{'
+		return {4}Mapper.query{3}All();
 	}
 }
