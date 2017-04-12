@@ -9,9 +9,9 @@
 		    {5}
 		) values (
 {6}
-		#'{createdUser'},
+		#'{'createdUser},
 		sysdate(),
-		#'{updatedUser'},
+		#'{'updatedUser},
 		sysdate())
 	</insert>
 	
@@ -20,9 +20,9 @@
 		update {4}
 		set
 			{7}
-			UPDATED_USER = #'{updatedUser'},
+			UPDATED_USER = #'{'updatedUser},
             UPDATED_DATE = sysdate()
-        where ID = #'{id'}
+        where ID = #'{'id}
 	</update>
 	
 	<!-- 根据主键ID修改传入参数 -->
@@ -32,12 +32,12 @@
 {8}
 		    UPDATED_USER = #'{updatedUser'},
             UPDATED_DATE = sysdate()
-		where ID = #'{id'}
+		where ID = #'{'id}
 	</update>
 	
 	<!-- 物理删除 -->
 	<delete id="delete{3}ByPrimaryKey" parameterType="java.lang.Long">
-		delete from {4} where ID = #'{id'}
+		delete from {4} where ID = #'{'id}
 	</delete>
 	
 	<!-- 根据主键ID获取详情 -->
@@ -46,7 +46,7 @@
 			ID,{5}
 		from
 			{4}
-	  	where ID = #'{id'}
+	  	where ID = #'{'id}
 	</select>
 	
 	<!-- 分页查询 -->
@@ -56,11 +56,11 @@
 
 	<select id="get{3}CountByParams" resultType="int">
 			SELECT count(1) FROM {4}
-			<dynamic prepend="where">
-				<isNotEmpty prepend="and" property="paramsFieldXXXXXXXX">
-					REQUEST_PATH = #'{paramsFieldXXXXXXXX'}
-				</isNotEmpty>
-			</dynamic>
+			<where>
+                <if test="xxxxxxxxxx!=null and xxxxxxxxxx!=''">
+                    XXXXX_XXXXX = #'{'xxxxxxxxxx},
+                </if>
+            </where>
 	</select>
 	
 	<!-- 查询全部 -->
