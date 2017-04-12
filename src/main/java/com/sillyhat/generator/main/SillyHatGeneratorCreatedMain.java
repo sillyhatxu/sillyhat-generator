@@ -229,7 +229,7 @@ public class SillyHatGeneratorCreatedMain {
         //使用默认模板    {0}:作者; {1}:包名; {2}:模块名; {3}:实体名  {4} 表名 {5} 全列显示(除ID)
         //{6} insert字段 {7} update列 {8}updateByPrimaryKeySelective列{9}分页语句
         String[] fileReplaceSign = new String[] {
-            author,packageName,moduelName,entityName,tableName,getALLColumnn(),getInsertField(),getUpdateField(),getUpdateByPrimaryKeySelectivField(),getPageSQL()
+            author,packageName,moduelName,entityName,tableName,getALLColumnn(),getInsertField(),getUpdateField(),getUpdateByPrimaryKeySelectivField(),getPageSQL(),getSelectColumn()
         };
         /*******输出文件*******/
         String outPath;
@@ -283,6 +283,19 @@ public class SillyHatGeneratorCreatedMain {
         for (int i = 0; i < entityList.size(); i++) {
             SillyHatGeneratorEntityDTO entityDTO = entityList.get(i);
             result += entityDTO.getColumnName() + ",";
+        }
+        return result.length() > 0 ? result.substring(0,result.length() - 1) : "";
+    }
+
+    /**
+     * {10}
+     * @return
+     */
+    private String getSelectColumn(){
+        String result = "";
+        for (int i = 0; i < entityList.size(); i++) {
+            SillyHatGeneratorEntityDTO entityDTO = entityList.get(i);
+            result += entityDTO.getColumnName() + " as " + entityDTO.getEntityFieldName() + ",";
         }
         return result.length() > 0 ? result.substring(0,result.length() - 1) : "";
     }
