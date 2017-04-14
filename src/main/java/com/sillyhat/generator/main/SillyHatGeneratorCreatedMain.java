@@ -334,7 +334,7 @@ public class SillyHatGeneratorCreatedMain {
         String result = "";
         for (int i = 0; i < entityList.size(); i++) {
             SillyHatGeneratorEntityDTO entityDTO = entityList.get(i);
-            result += SillyHatGeneratorStringUtils.getSignX(SillyHatGeneratorConstants.SIGN_TAB, 3) + "<if test=\"\" + entityDTO.getEntityFieldName() + \"!=null and \" + entityDTO.getEntityFieldName() + \"!=''\">" + SillyHatGeneratorConstants.SIGN_ENTER;
+            result += SillyHatGeneratorStringUtils.getSignX(SillyHatGeneratorConstants.SIGN_TAB, 3) + "<if test=\"" + entityDTO.getEntityFieldName() + "!=null and " + entityDTO.getEntityFieldName() + "!=''\">" + SillyHatGeneratorConstants.SIGN_ENTER;
             result += SillyHatGeneratorStringUtils.getSignX(SillyHatGeneratorConstants.SIGN_TAB, 4) + entityDTO.getColumnName() + " = #{" + entityDTO.getEntityFieldName() + "},"+ SillyHatGeneratorConstants.SIGN_ENTER;
             result += SillyHatGeneratorStringUtils.getSignX(SillyHatGeneratorConstants.SIGN_TAB, 3) + "</if>" + SillyHatGeneratorConstants.SIGN_ENTER;
         }
